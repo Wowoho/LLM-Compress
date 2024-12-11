@@ -1,0 +1,32 @@
+base:
+    seed: &seed 42
+model:
+    type: Qwen2
+    path: xx/Qwen2.5-7B-Instruct
+    torch_dtype: auto
+calib:
+    name: pileval
+    download: False
+    path: xx/data/pileval
+    n_samples: 128
+    bs: -1
+    seq_len: 512
+    preproc: general
+    seed: *seed
+eval:
+    eval_pos: [transformed]
+    name: wikitext2
+    download: false
+    path: xx/data/wikitext2
+    seq_len: 2048
+    bs: 1
+    inference_per_block: False
+sparse:
+    method: shortllm
+    weight:
+        n_prune_layers: 6
+save:
+    save_trans: True
+    save_fp: False
+    save_lightllm: False
+    save_path: ./save_prune

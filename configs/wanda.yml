@@ -1,0 +1,33 @@
+base:
+    seed: &seed 42
+model:
+    type: Llama
+    path: xx/Llama-2-7b-hf
+    tokenizer_mode: slow
+    torch_dtype: auto
+calib:
+    name: pileval
+    download: False
+    path: xx/data
+    n_samples: 128
+    bs: -1
+    seq_len: 512
+    preproc: general
+    seed: *seed
+eval:
+    eval_pos: [transformed]
+    name: wikitext2
+    download: false
+    path: xx/data
+    seq_len: 2048
+    bs: 1
+    inference_per_block: False
+sparse:
+    method: Wanda
+    weight:
+        sparsity: 0.3
+    sparsity_out: True
+save:
+    save_vllm: True
+    save_trans: True
+    save_path: ./vllm_wanda_0.3/

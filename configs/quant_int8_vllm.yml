@@ -1,0 +1,45 @@
+base:
+    seed: &seed 42
+model:
+    type: Llama
+    path: xxx/Meta-Llama-3.1-8B
+    tokenizer_mode: slow
+    torch_dtype: auto
+calib:
+    name: pileval
+    download: True
+    path: xxx/data
+    n_samples: 128
+    bs: -1
+    seq_len: 512
+    preproc: general
+    seed: *seed
+eval:
+    eval_pos: [fake_quant]
+    name: wikitext2
+    download: True
+    path: xxx/data
+    seq_len: 2048
+    bs: -1
+    inference_per_block: False
+quant:
+    method: Awq
+    quant_type: int-quant
+    weight:
+        bit: 8
+        symmetric: True
+        granularity: per_channel
+        group_size: -1
+    act:
+        bit: 8
+        symmetric: True
+        granularity: per_token
+    special:
+        trans: True
+        trans_version: v2
+        weight_clip: True
+    quant_out: True
+save:
+    save_fake: True
+    save_vllm: True
+    save_path: ./output_model/
